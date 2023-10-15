@@ -62,7 +62,7 @@ namespace Catalog.API.Data
                     ImageFile = "product-4.png",
                     Price = 470.00M,
                     Category = "White Appliances"
-                },
+                }, 
                 new Product()
                 {
                     Id = "602d2149e773f2a3990b47f9",
