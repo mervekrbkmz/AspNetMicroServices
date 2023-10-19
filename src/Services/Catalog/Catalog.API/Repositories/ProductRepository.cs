@@ -34,7 +34,6 @@ namespace  Catalog.API.Repositories
                             .Products
                             .Find(filter)
                             .ToListAsync();
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Product>> GetProducts()
@@ -62,16 +61,25 @@ namespace  Catalog.API.Repositories
                         .Products   
                         .Find(filter)
                         .ToListAsync();
-        }
-
-        public Task<bool> UpdateProduct(Product product)
+        }       
+        
+        public async Task<bool> UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            // replace yöntemi, koleksiyondaki bir belgenin belirli bir koşula (filter) göre değiştirilmesini sağlar. Bu belge değiştirme işlemi, product değişkeni tarafından temsil edilen yeni bir belge ile gerçekleştirilir.
+            var updateResult= await _catalogContext
+                                     .Products
+                                     .ReplaceOneAsync(filter:g=>g.Id==product.Id,replacement:product);
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount>0; //IsAcknowledged:güncellenmenin başarılı bir şekilde onaylandığının kontrol eder.      
         }
-
-        // public async Task<bool> UpdateProduct(Product product)
+        // public async Task<bool> DeleteProduct(string id)
         // {
-        //    var updateResult=await _catalogContext.Products.
+        //     FilterDefinition<Product> filter=Builders<Product>.Filter(x=>x.Id==id);
+        //     var deletedResult= await _catalogContext
+        //                               .Products
+        //                               .DeleteOneAsync(filter:x=>x.Id==id,cancellationToken:default);
+
+
+
         // }
     }
 }
